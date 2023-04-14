@@ -1,0 +1,38 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.14.3_dev_0.8
+  generator: "Rime::SwitcherSettings"
+  modified_time: "Fri Apr 14 15:08:12 2023"
+  rime_version: 1.8.5
+patch:
+  "ascii_composer/good_old_caps_lock": true
+  "ascii_composer/switch_key":
+    Caps_Lock: commit_code
+    Control_L: noop
+    Control_R: noop
+    Shift_L: commit_code
+    Shift_R: commit_text
+  "key_binder/bindings":
+    - { accept: Escape, toggle: ascii_mode, when: always }
+    - { accept: semicolon, send: 2, when: has_menu }
+    - { accept: apostrophe, send: 3, when: has_menu }
+    - { accept: comma, send: Page_Up, when: paging }
+    - { accept: period, send: Page_Down, when: has_menu }
+  "menu/page_size": 9
+  schema_list:
+    - { schema: rime_ice }
+    - { schema: melt_eng }
+    - { schema: liangfen }
+    - { schema: luna_pinyin_simp }
+  "switcher/hotkeys":
+    - "Control+grave"
+  "switcher/save_options":
+    - full_shape
+    - ascii_punct
+    - simplification
+    - zh_hans
+    - emoji_suggestion
+  "translator/enable_encoder": true
+  "translator/enable_sentence": true
+  "translator/enable_user_dict": true
+  "translator/encode_commit_history": true
