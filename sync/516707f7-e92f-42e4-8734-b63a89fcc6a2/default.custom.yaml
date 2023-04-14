@@ -23,7 +23,7 @@ patch:
     - { schema: rime_ice }
     - { schema: melt_eng }
     - { schema: liangfen }
-    # - { schema: luna_pinyin_simp } # 在mac下注释掉这行 日期 时间 这些才能正常启用
+    - { schema: luna_pinyin_simp }
   "switcher/hotkeys":
     - "Control+grave"
   "switcher/save_options":

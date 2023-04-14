@@ -1,0 +1,19 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.14.3_dev_0.8
+  generator: "Weasel::UIStyleSettings"
+  modified_time: "Fri Apr 14 15:01:35 2023"
+  rime_version: 1.8.5
+patch:
+  "style/display_tray_icon": true
+  "style/color_scheme": dark_temple
+  "style/display_tray_icon": true #显示托盘图标
+  "style/horizontal": true #横排
+  "style/font_face": "Microsoft YaHei" #微软雅黑
+  "style/font_point": 13 #字号13
+  app_options/code.exe:
+    ascii_mode: true
+  app_options/nvim.exe:
+    ascii_mode: true
+  app_options/windowsterminal.exe:
+    ascii_mode: true
