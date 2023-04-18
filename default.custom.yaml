@@ -36,3 +36,11 @@ patch:
   "translator/enable_sentence": true
   "translator/enable_user_dict": true
   "translator/encode_commit_history": true
+  "punctuator/half_shape":
+    "<": [《, 〈, «, ‹]
+    ">": [》, 〉, », ›]
+    "/": [／, ÷]
+    "%": [％, "°", "℃"]
+    "$": [￥, "$", "€", "£", "¥", "¢", "¤"]
+    "*": [＊, ·, ・, ×, ※, ❂]
+    "-": ["-", "_"]
