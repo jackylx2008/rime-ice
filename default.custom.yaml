@@ -5,46 +5,44 @@ customization:
   modified_time: "Fri Apr 14 15:08:12 2023"
   rime_version: 1.8.5
 patch:
-  "ascii_composer/good_old_caps_lock": true
-  "ascii_composer/switch_key":
-    Caps_Lock: commit_code
-    Control_L: noop
-    Control_R: noop
-    Shift_L: commit_code
-    Shift_R: commit_text
-  "key_binder/bindings":
-    - { accept: Escape, toggle: ascii_mode, when: always }
-    - { accept: semicolon, send: 2, when: has_menu }
-    - { accept: apostrophe, send: 3, when: has_menu }
-    - { accept: comma, send: Page_Up, when: paging }
-    - { accept: period, send: Page_Down, when: has_menu }
-  "menu/page_size": 9
-  schema_list:
+  schema_list: # 方案列表
     - { schema: rime_ice }
     - { schema: melt_eng }
     - { schema: liangfen }
     # - { schema: luna_pinyin_simp } # 在mac下注释掉这行 日期 时间 这些才能正常启用
-  "switcher/hotkeys":
+
+  "switcher/caption": # 切换方案时显示的标题
+    - 「方案选单」
+  "switcher/hotkeys": # 切换方案的快捷键
     - "Control+grave"
-  "switcher/save_options":
-    - full_shape
-    - ascii_punct
-    - simplification
+  "switcher/save_options": # 在切换方案时保留的选项
+    - full_shape  # 保留全角模式
+    - ascii_punct # 保留西文模式
+    - transcription     # 保留汉字简繁体选项
+    - emoji_suggestion  # Emoji    
     - zh_hans
-    - emoji_suggestion
-  "translator/enable_encoder": true
-  "translator/enable_sentence": true
-  "translator/enable_user_dict": true
-  "translator/encode_commit_history": true
-  "punctuator/half_shape":
+  "switcher/fold_options": true # 折叠选项以节省空间，多方案时建议折叠 true ，一个方案建议展开 false
+  "switcher/abbreviate_options": true # 对选项进行缩写
+  "switcher/option_list_separator": '／'
+
+  "menu/page_size": 9 # 候选词个数
+
+  "translator/enable_encoder": true # 启用自动造词
+  "translator/enable_sentence": true # 启用自动句子输入
+  "translator/enable_user_dict": true # 启用用户词典
+  "translator/encode_commit_history": true  # 对已上屏的词语进行自动编码以提高下次输入的命中率
+
+
+  "punctuator/full_shape":
+    " ": { commit: "　" }
     ",": { commit: ， }
     ".": { commit: 。 }
     "<": [《, 〈, «, ‹]
     ">": [》, 〉, », ›]
     "/": [／, ÷]
-    "?": ？
-    ";": ；
-    ":": ：
+    "?": { commit: ？ }
+    ";": { commit: ； }
+    ":": { commit: ： }
     "'": { pair: ["‘", "’"] }
     '"': { pair: ["“", "”"] }
     '\': [、, ＼]
@@ -69,3 +67,173 @@ patch:
     "]": [」, 】, 〕, ］]
     "{": [『, 〖, ｛]
     "}": [』, 〗, ｝]
+  "punctuator/half_shape":
+    ",": { commit: ， }
+    ".": { commit: 。 }
+    "<": [《, 〈, «, ‹]
+    ">": [》, 〉, », ›]
+    "/": ['/', ÷]
+    '?' : { commit: ？ }
+    ';' : { commit: ； }
+    ':' : { commit: ： }
+    "'": { pair: ["‘", "’"] }
+    '"': { pair: ["“", "”"] }
+    '\': [、, ＼]
+    "|": [·, ｜, "§", "¦"]
+    "`": ｀
+    "~": [ '~', 〜, ～, 〰 ]    
+    "!": { commit: ！ }
+    '@' : '@'
+    '#' : '#'
+    "%": [％, "°", "℃"]
+    "$": [￥, "$", "€", "£", "¥", "¢", "¤"]
+    "^": { commit: …… }
+    "&": ＆
+    "*": [＊, ·, ・, ×, ※, ❂]
+    "(": （
+    ")": ）
+    "-": ["-", "_"]
+    "_": ——
+    "+": ＋
+    "=": ＝
+    "[": [「, 【, 〔, ［]
+    "]": [」, 】, 〕, ］]
+    "{": [『, 〖, ｛]
+    "}": [』, 〗, ｝]
+
+  "key_binder/bindings":
+    - { when: always, accept: Shift+space, toggle: ascii_mode }
+    - { when: has_menu, accept: semicolon, send: 2 }
+    - { when: has_menu,accept: apostrophe, send: 3 }
+    - { when: has_menu, accept: period, send: Page_Down}
+    - { when: paging, accept: comma, send: Page_Up }
+    # vim_editing:
+    - { when: composing, accept: Control+k, send: Page_Down }
+    - { when: composing, accept: Control+j, send: Page_Up }
+    - { when: composing, accept: Control+h, send: Left }
+    - { when: composing, accept: Control+l, send: Right }
+    - { when: composing, accept: Control+i, send: Home }
+    - { when: composing, accept: Control+o, send: End }
+    - { when: composing, accept: Control+g, send: Escape }
+
+  "ascii_composer/switch_key": # 定义切换到西文模式的快捷键
+    # Caps_Lock: commit_code # 按下 Caps Lock 会直接上屏 实际在我这没用，Caps作为他用
+    Control_L: noop # 按下左 Control 键不做任何操作
+    Control_R: noop # 按下右 Control 键不做任何操作
+    Shift_L: commit_code  # 按下左 Shift 键后键击直接上屏
+    Shift_R: commit_text  # 按下右 Shift 键后键击直接上屏
+  "ascii_composer/good_old_caps_lock": true # 中西文切换
+
+# 按键速查
+# https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md
+# （没有 Command 键，不支持）
+# accept 和 send 可用字段除 A-Za-z0-9 外，还包含以下键盘上实际有的键：
+# BackSpace	退格
+# Tab	水平定位符
+# Linefeed	换行
+# Clear	清除
+# Return	回车
+# Pause	暂停
+# Sys_Req	印屏
+# Escape	退出
+# Delete	删除
+# Home	原位
+# Left	左箭头
+# Up	上箭头
+# Right	右箭头
+# Down	下箭头
+# Prior、Page_Up	上翻
+# Next、Page_Down	下翻
+# End	末位
+# Begin	始位
+# Shift_L	左Shift
+# Shift_R	右Shift
+# Control_L	左Ctrl
+# Control_R	右Ctrl
+# Meta_L	左Meta
+# Meta_R	右Meta
+# Alt_L	左Alt
+# Alt_R	右Alt
+# Super_L	左Super
+# Super_R	右Super
+# Hyper_L	左Hyper
+# Hyper_R	右Hyper
+# Caps_Lock	大写锁
+# Shift_Lock	上档锁
+# Scroll_Lock	滚动锁
+# Num_Lock	小键板锁
+# Select	选定
+# Print	打印
+# Execute	运行
+# Insert	插入
+# Undo	还原
+# Redo	重做
+# Menu	菜单
+# Find	搜寻
+# Cancel	取消
+# Help	帮助
+# Break	中断
+# space	空格
+# exclam	!
+# quotedbl	"
+# numbersign	#
+# dollar	$
+# percent	%
+# ampersand	&
+# apostrophe	'
+# parenleft	(
+# parenright	)
+# asterisk	*
+# plus	+
+# comma	,
+# minus	-
+# period	.
+# slash	/
+# colon	:
+# semicolon	;
+# less	<
+# equal	=
+# greater	>
+# question	?
+# at	@
+# bracketleft	[
+# backslash	\
+# bracketright	]
+# asciicircum	^
+# underscore	_
+# grave	`
+# braceleft	{
+# bar	|
+# braceright	}
+# asciitilde	~
+# KP_Space	小键板空格
+# KP_Tab	小键板水平定位符
+# KP_Enter	小键板回车
+# KP_Delete	小键板删除
+# KP_Home	小键板原位
+# KP_Left	小键板左箭头
+# KP_Up	小键板上箭头
+# KP_Right	小键板右箭头
+# KP_Down	小键板下箭头
+# KP_Prior、KP_Page_Up	小键板上翻
+# KP_Next、KP_Page_Down	小键板下翻
+# KP_End	小键板末位
+# KP_Begin	小键板始位
+# KP_Insert	小键板插入
+# KP_Equal	小键板等于
+# KP_Multiply	小键板乘号
+# KP_Add	小键板加号
+# KP_Subtract	小键板减号
+# KP_Divide	小键板除号
+# KP_Decimal	小键板小数点
+# KP_0	小键板0
+# KP_1	小键板1
+# KP_2	小键板2
+# KP_3	小键板3
+# KP_4	小键板4
+# KP_5	小键板5
+# KP_6	小键板6
+# KP_7	小键板7
+# KP_8	小键板8
+# KP_9	小键板9
+
