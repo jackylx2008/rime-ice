@@ -1,0 +1,6 @@
+# Rime user dictionary
+#@/db_name	liangfen
+#@/db_type	userdb
+#@/rime_version	1.11.2
+#@/tick	0
+#@/user_id	516707f7-e92f-42e4-8734-b63a89fcc6a2

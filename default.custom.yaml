@@ -8,7 +8,7 @@ patch:
   schema_list: # 方案列表
     - { schema: rime_ice }
     - { schema: melt_eng }
-    - { schema: liangfen }
+    # - { schema: liangfen }
     # - { schema: luna_pinyin_simp } # 在mac下注释掉这行 日期 时间 这些才能正常启用
 
   "switcher/caption": # 切换方案时显示的标题
@@ -19,7 +19,7 @@ patch:
     - full_shape  # 保留全角模式
     - ascii_punct # 保留西文模式
     - transcription     # 保留汉字简繁体选项
-    - emoji_suggestion  # Emoji    
+    # - emoji_suggestion  # Emoji    
     - zh_hans
   "switcher/fold_options": true # 折叠选项以节省空间，多方案时建议折叠 true ，一个方案建议展开 false
   "switcher/abbreviate_options": true # 对选项进行缩写

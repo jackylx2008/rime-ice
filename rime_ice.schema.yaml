@@ -14,7 +14,12 @@ schema:
     https://github.com/iDvel/rime-ice
   dependencies:
     - melt_eng  # 英文输入，作为次翻译器挂载到拼音方案
-    - liangfen  # 两分拼字，作为反查挂载到拼音方案
+    - liangfen  # 两分    - radical_pinyin_flypy # 参考 https://github.com/mirtlecn/rime-radical-pinyin
+
+    - radical_pinyin # 参考 https://github.com/mirtlecn/rime-radical-pinyin
+    - wubi98_mint # 98五笔库 https://github.com/yanhuacuo/98wubi-tables
+    - stroke
+    - melt_eng # 英文方案拼字，作为反查挂载到拼音方案
 
 
 # 开关
@@ -31,43 +36,61 @@ switches:
   - name: traditionalization
     states: [ 简, 繁 ]
     reset: 0
-  - name: emoji
-    states: [ 💀, 😄 ]
-    reset: 1
-  - name: full_shape
-    states: [ 半角, 全角 ]
-    reset: 0
+  # - name: emoji
+  #   states: [ 💀, 😄 ]
+  #   reset: 1
+  # - name: full_shape
+  #   states: [ 半角, 全角 ]
+  #   reset: 0
 
 
 # 输入引擎
 engine:
   processors:
-    - lua_processor@select_character  # 以词定字
-    - ascii_composer
-    - recognizer
-    - key_binder
+    - lua_processor@*select_character
+    - lua_processor@*codeLengthLimit_processor     # 使用Lua限制输入内容的最大长度(防止过长而卡顿)
+    - ascii_composer                               # ※ 處理西文模式及中西文切換
+    - recognizer                                   # ※ 與 matcher 搭配，處理符合特定規則的輸入碼，如網址、反查等
+    - key_binder                                   # ※ 在特定條件下將按鍵綁定到其他按鍵，如重定義逗號、句號爲候選翻頁鍵
     - speller
     - punctuator
     - selector
     - navigator
     - express_editor
   segmentors:
-    - ascii_segmentor
-    - matcher
-    - abc_segmentor
-    - punct_segmentor
-    - fallback_segmentor
+    - ascii_segmentor                                    # 標識西文段落
+    - matcher                                            # 標識符合特定規則的段落，如網址、反查等
+    - affix_segmentor@wubi98_mint
+    - affix_segmentor@radical_reverse_lookup
+    - affix_segmentor@stroke
+    - abc_segmentor                                      # 標識常規的文字段落
+    - punct_segmentor                                    # 標識句讀段落
+    - fallback_segmentor                                 # 標識其他未標識段落
   translators:
-    - punct_translator
+
+    - punct_translator                                   # ※ 轉換標點符號
     - script_translator
+
+    - lua_translator@*mint_date_time_translator          # 时间、日期、星期、月份
+    - lua_translator@*number_translator                  # 金额大小写
+    - lua_translator@*chineseLunarCalendar_translator    # 农历
+    - lua_translator@*force_gc
     - lua_translator@date_translator      # 时间、日期、星期
+    # - lua_translator@unicode              # Unicode
+
+    - table_translator@melt_eng                          # 英文输入（作为子翻译器，优先级需要比原生的低）
+    - table_translator@cn_en                             # 中英混合词汇
     - table_translator@custom_phrase      # 自定义短语 custom_phrase.txt
-    - table_translator@melt_eng           # 英文输入
+
     - reverse_lookup_translator@liangfen  # 反查，两分拼字
-    - lua_translator@unicode              # Unicode
+    - reverse_lookup_translator@wubi98_mint　
+    - reverse_lookup_translator@radical_reverse_lookup
+    - reverse_lookup_translator@stroke
+    # - reverse_lookup_translator                   # 反查模块，多标签情况下去除
+    # - echo_translator                             # ※ 没有候选词，返回字符
   filters:
     - lua_filter@long_word_filter       # 长词优先
-    - simplifier@emoji                  # Emoji
+    # - simplifier@emoji                  # Emoji
     - simplifier@traditionalize         # 简繁切换
     - lua_filter@v_filter               # v 模式 symbols 优先（否则是英文优先）
     - lua_filter@reduce_english_filter  # 降低部分英语单词在候选项的位置
@@ -117,8 +140,8 @@ translator:
   initial_quality: 1.2          # 拼音的权重应该比英文大
   preedit_format:               # preedit_format 影响到输入框的显示和“Shift+回车”上屏的字符
     - xform/([jqxy])v/$1u/      # 显示为 ju qu xu yu
-    # - xform/([nl])v/$1ü/      # 显示为 nü lü
-    # - xform/([nl])ue/$1üe/    # 显示为 nüe lüe
+    - xform/([nl])v/$1ü/      # 显示为 nü lü
+    - xform/([nl])ue/$1üe/    # 显示为 nüe lüe
     - xform/([nl])v/$1v/        # 显示为 nv lv
     - xform/([nl])ue/$1ve/      # 显示为 nve lve
 
